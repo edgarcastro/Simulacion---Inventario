@@ -74,4 +74,17 @@ public class CMayorista {
         }
         ventana.mostrarOrdenes(datos, mayorista.getOrdenes().size());
     }
+    
+    public static void mostrarMiPedido(){
+        Orden referencia = mayorista.getMisOrdenes().get(mayorista.getMisOrdenes().size()-1);
+        if(referencia.isAtendido())
+            ventana.mostrarMiPedido(0, 0);
+        else 
+            ventana.mostrarMiPedido(referencia.getCantidad(), referencia.getDiasEspera());
+    }
+    
+    public static void mostrarMinoristas(){
+        ventana.mostrarMinoristas(mayorista.getMinoristas());
+        actualizarClientes(mayorista.getMinoristas());
+    }
 }

@@ -20,7 +20,10 @@ public class VMayorista extends javax.swing.JFrame {
      */
     public VMayorista() {
         initComponents();
-        //mostrarOrdenes();
+        this.lInventario.setText("");
+        this.lPedido.setText("");
+        this.lDiaActual.setText("");
+        this.lNumClientes.setText("");
     }
     
     public void actualizarCliente(List clientes){
@@ -44,6 +47,32 @@ public class VMayorista extends javax.swing.JFrame {
         DefaultTableModel temp = (DefaultTableModel) tOrdenes.getModel();
         for (int i = 0; i < tam; i++) {
             temp.addRow(datos[i]);
+        }
+    }
+    
+    public void mostrarMinoristas(List<String> minoristas) {
+        tMinoristas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {},
+            new String [] {
+                "Id", "Minorista"
+            }));
+        DefaultTableModel temp = (DefaultTableModel) tMinoristas.getModel();
+        Object[] fila = new Object[]{};
+        for (int i = 0; i < minoristas.size(); i++) {
+            if(minoristas.get(i).equals("H"))
+                fila = new Object[]{i,"Humano"};
+            if(minoristas.get(i).equals("S"))
+                fila = new Object[]{i,"Simulado"};
+            temp.addRow(fila);
+        }
+    }
+    
+    public void mostrarMiPedido(int cantidad, int diasEspera){
+        if(cantidad == 0 && diasEspera == 0)
+            this.cTengoPedido.setSelected(false);
+        else{
+            this.cTengoPedido.setSelected(true);
+            this.lPedido.setText("<html>Cantidad: "+cantidad+"<br>Dias de Espera: "+diasEspera+"</html>");
         }
     }
 
@@ -73,8 +102,14 @@ public class VMayorista extends javax.swing.JFrame {
         sOrdenes = new javax.swing.JScrollPane();
         tOrdenes = new javax.swing.JTable();
         bAuto = new javax.swing.JButton();
+        sMinoristas = new javax.swing.JScrollPane();
+        tMinoristas = new javax.swing.JTable();
+        cTengoPedido = new javax.swing.JCheckBox();
+        lPedido = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("MAYORISTA");
+        setResizable(false);
 
         lPuerto.setText("Puerto:");
 
@@ -136,6 +171,27 @@ public class VMayorista extends javax.swing.JFrame {
             }
         });
 
+        tMinoristas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Id", "Minorista"
+            }
+        ));
+        tMinoristas.setEnabled(false);
+        sMinoristas.setViewportView(tMinoristas);
+
+        cTengoPedido.setText("Tengo un pedido");
+        cTengoPedido.setEnabled(false);
+        cTengoPedido.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                cTengoPedidoStateChanged(evt);
+            }
+        });
+
+        lPedido.setText("<html>\nCantidad: \n<br>\nDias de espera: \n</html>");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -143,53 +199,54 @@ public class VMayorista extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(28, 28, 28)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lStock)
-                            .addComponent(lP))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(tP, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(lQ))
-                            .addComponent(lInventario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(lDia)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lDiaActual))
-                            .addComponent(BSgteDia))))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(BSgteDia)))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(9, 9, 9)
+                        .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cTengoPedido)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(tQ, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lPuerto)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lStock)
+                                    .addComponent(lP))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(tPuerto, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(bIniciar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(bAuto)
-                                .addGap(14, 14, 14))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addGap(0, 62, Short.MAX_VALUE)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(lClientes)
-                                        .addGap(29, 29, 29))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                        .addComponent(sOrdenes, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(61, 61, 61))))))
+                                    .addComponent(lInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(tP, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(lPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(lClientes)
+                                .addGap(31, 31, 31)
+                                .addComponent(lNumClientes))
+                            .addComponent(sMinoristas, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(37, 37, 37)
+                        .addComponent(sOrdenes, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(3, 3, 3)
+                        .addComponent(lQ)
+                        .addGap(18, 18, 18)
+                        .addComponent(tQ, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lNumClientes)
-                        .addGap(63, 63, 63))))
+                        .addComponent(lPuerto)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tPuerto, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(bIniciar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bAuto)
+                        .addGap(14, 14, 14))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -204,27 +261,30 @@ public class VMayorista extends javax.swing.JFrame {
                     .addComponent(lQ)
                     .addComponent(tQ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(bAuto))
+                .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(29, 29, 29)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lStock)
-                            .addComponent(lInventario)))
+                            .addComponent(lInventario))
+                        .addGap(32, 32, 32)
+                        .addComponent(cTengoPedido)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sOrdenes, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(sOrdenes, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                        .addComponent(sMinoristas, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lClientes)
+                            .addComponent(lNumClientes))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lDia)
                     .addComponent(lDiaActual))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(BSgteDia)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(lClientes)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lNumClientes)))
-                .addGap(57, 57, 57))
+                .addComponent(BSgteDia)
+                .addGap(76, 76, 76))
         );
 
         pack();
@@ -246,11 +306,16 @@ public class VMayorista extends javax.swing.JFrame {
     }//GEN-LAST:event_BSgteDiaActionPerformed
 
     private void bAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAutoActionPerformed
-        this.tP.setText(""+50);
-        this.tQ.setText(""+90);
+        this.tP.setText(""+100);
+        this.tQ.setText(""+500);
         this.tPuerto.setText(""+5555);
         bIniciarActionPerformed(evt);
     }//GEN-LAST:event_bAutoActionPerformed
+
+    private void cTengoPedidoStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_cTengoPedidoStateChanged
+        if(!this.cTengoPedido.isSelected())
+            this.lPedido.setText("");
+    }//GEN-LAST:event_cTengoPedidoStateChanged
 
     /**
      * @param args the command line arguments
@@ -291,16 +356,20 @@ public class VMayorista extends javax.swing.JFrame {
     private javax.swing.JButton BSgteDia;
     private javax.swing.JButton bAuto;
     private javax.swing.JButton bIniciar;
+    private javax.swing.JCheckBox cTengoPedido;
     private javax.swing.JLabel lClientes;
     private javax.swing.JLabel lDia;
     private javax.swing.JLabel lDiaActual;
     private javax.swing.JLabel lInventario;
     private javax.swing.JLabel lNumClientes;
     private javax.swing.JLabel lP;
+    private javax.swing.JLabel lPedido;
     private javax.swing.JLabel lPuerto;
     private javax.swing.JLabel lQ;
     private javax.swing.JLabel lStock;
+    private javax.swing.JScrollPane sMinoristas;
     private javax.swing.JScrollPane sOrdenes;
+    private javax.swing.JTable tMinoristas;
     private javax.swing.JTable tOrdenes;
     private javax.swing.JTextField tP;
     private javax.swing.JTextField tPuerto;
