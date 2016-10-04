@@ -35,7 +35,11 @@
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
                               <Component id="lDiaActual" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="BSgteDia" alignment="0" min="-2" max="-2" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="BSgteDia" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Component id="bDiaAuto" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -53,6 +57,11 @@
                                   <Component id="tP" min="-2" pref="51" max="-2" attributes="0"/>
                               </Group>
                           </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="lFaltantes" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Component id="lFalta" min="-2" max="-2" attributes="0"/>
+                          </Group>
                       </Group>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
@@ -62,7 +71,7 @@
               </Group>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="101" max="32767" attributes="0"/>
+                      <EmptySpace pref="64" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="1" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="lClientes" min="-2" max="-2" attributes="0"/>
@@ -115,7 +124,12 @@
                           <Component id="lStock" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="lInventario" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="lFaltantes" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="lFalta" alignment="3" min="-2" max="-2" attributes="0"/>
+                      </Group>
+                      <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                       <Component id="cTengoPedido" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="lPedido" min="-2" max="-2" attributes="0"/>
@@ -136,7 +150,10 @@
                   <Component id="lDiaActual" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="BSgteDia" min="-2" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="BSgteDia" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="bDiaAuto" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
               <EmptySpace min="-2" pref="76" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -277,6 +294,25 @@
     <Component class="javax.swing.JLabel" name="lPedido">
       <Properties>
         <Property name="text" type="java.lang.String" value="&lt;html&gt;&#xa;Cantidad: &#xa;&lt;br&gt;&#xa;Dias de espera: &#xa;&lt;/html&gt;"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JButton" name="bDiaAuto">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Auto"/>
+        <Property name="enabled" type="boolean" value="false"/>
+      </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bDiaAutoActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lFaltantes">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Faltantes:"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JLabel" name="lFalta">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="###"/>
       </Properties>
     </Component>
   </SubComponents>

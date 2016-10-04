@@ -24,6 +24,7 @@ public class VMayorista extends javax.swing.JFrame {
         this.lPedido.setText("");
         this.lDiaActual.setText("");
         this.lNumClientes.setText("");
+        this.lFalta.setText("");
     }
     
     public void actualizarCliente(List clientes){
@@ -34,8 +35,9 @@ public class VMayorista extends javax.swing.JFrame {
         this.lDiaActual.setText(""+dia);
     }
     
-    public void mostrarStock(int cantidad){
+    public void mostrarStock(int cantidad, int faltantes){
         this.lInventario.setText(""+cantidad);
+        this.lFalta.setText(""+faltantes);
     }
     
     public void mostrarOrdenes(Object[][] datos, int tam) {
@@ -106,6 +108,9 @@ public class VMayorista extends javax.swing.JFrame {
         tMinoristas = new javax.swing.JTable();
         cTengoPedido = new javax.swing.JCheckBox();
         lPedido = new javax.swing.JLabel();
+        bDiaAuto = new javax.swing.JButton();
+        lFaltantes = new javax.swing.JLabel();
+        lFalta = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("MAYORISTA");
@@ -192,6 +197,18 @@ public class VMayorista extends javax.swing.JFrame {
 
         lPedido.setText("<html>\nCantidad: \n<br>\nDias de espera: \n</html>");
 
+        bDiaAuto.setText("Auto");
+        bDiaAuto.setEnabled(false);
+        bDiaAuto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bDiaAutoActionPerformed(evt);
+            }
+        });
+
+        lFaltantes.setText("Faltantes:");
+
+        lFalta.setText("###");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -205,7 +222,10 @@ public class VMayorista extends javax.swing.JFrame {
                                 .addComponent(lDia)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(lDiaActual))
-                            .addComponent(BSgteDia)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(BSgteDia)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(bDiaAuto))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -217,13 +237,17 @@ public class VMayorista extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tP, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                    .addComponent(tP, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lFaltantes)
+                                .addGap(18, 18, 18)
+                                .addComponent(lFalta))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(lPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 101, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(lClientes)
@@ -267,7 +291,11 @@ public class VMayorista extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(lStock)
                             .addComponent(lInventario))
-                        .addGap(32, 32, 32)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lFaltantes)
+                            .addComponent(lFalta))
+                        .addGap(12, 12, 12)
                         .addComponent(cTengoPedido)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -283,7 +311,9 @@ public class VMayorista extends javax.swing.JFrame {
                     .addComponent(lDia)
                     .addComponent(lDiaActual))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(BSgteDia)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(BSgteDia)
+                    .addComponent(bDiaAuto))
                 .addGap(76, 76, 76))
         );
 
@@ -299,6 +329,7 @@ public class VMayorista extends javax.swing.JFrame {
         this.tPuerto.setEditable(Boolean.FALSE);
         this.tPuerto.setEnabled(Boolean.FALSE);
         this.BSgteDia.setEnabled(true);
+        this.bDiaAuto.setEnabled(true);
     }//GEN-LAST:event_bIniciarActionPerformed
 
     private void BSgteDiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BSgteDiaActionPerformed
@@ -316,6 +347,10 @@ public class VMayorista extends javax.swing.JFrame {
         if(!this.cTengoPedido.isSelected())
             this.lPedido.setText("");
     }//GEN-LAST:event_cTengoPedidoStateChanged
+
+    private void bDiaAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bDiaAutoActionPerformed
+        CMayorista.diaAuto();
+    }//GEN-LAST:event_bDiaAutoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -355,11 +390,14 @@ public class VMayorista extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BSgteDia;
     private javax.swing.JButton bAuto;
+    private javax.swing.JButton bDiaAuto;
     private javax.swing.JButton bIniciar;
     private javax.swing.JCheckBox cTengoPedido;
     private javax.swing.JLabel lClientes;
     private javax.swing.JLabel lDia;
     private javax.swing.JLabel lDiaActual;
+    private javax.swing.JLabel lFalta;
+    private javax.swing.JLabel lFaltantes;
     private javax.swing.JLabel lInventario;
     private javax.swing.JLabel lNumClientes;
     private javax.swing.JLabel lP;

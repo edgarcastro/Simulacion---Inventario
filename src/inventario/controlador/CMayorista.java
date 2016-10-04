@@ -11,6 +11,8 @@ import inventario.vista.VMayorista;
 import java.rmi.AlreadyBoundException;
 import java.rmi.RemoteException;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import numerospseudoaleatorios.modelo.Generador;
@@ -58,7 +60,7 @@ public class CMayorista {
     }
     
     public static void mostrarStock(){
-        ventana.mostrarStock((int) mayorista.getInventario());
+        ventana.mostrarStock((int) mayorista.getInventario(), mayorista.getFaltantes());
     }
     
     public static void mostrarOrdenes(){
@@ -86,5 +88,21 @@ public class CMayorista {
     public static void mostrarMinoristas(){
         ventana.mostrarMinoristas(mayorista.getMinoristas());
         actualizarClientes(mayorista.getMinoristas());
+    }
+    
+    public static void diaAuto(){
+        // Clase en la que está el código a ejecutar 
+        TimerTask timerTask = new TimerTask() 
+        { 
+            public void run()  
+            { 
+             siguienteDia();
+            } 
+        }; 
+     
+      // Aquí se pone en marcha el timer cada segundo. 
+     Timer timer = new Timer(); 
+     // Dentro de 0 milisegundos avísame cada 10000 milisegundos 
+     timer.scheduleAtFixedRate(timerTask, 0, 10000);
     }
 }

@@ -29,6 +29,7 @@ public class Mayorista {
     private double inventario;
     private double p; //Punto de reorden
     private double q; //Cantidad a ordenar
+    private int faltantes;
     private List<Orden> misOrdenes;
     private List<Orden> ordenes;
     
@@ -40,9 +41,10 @@ public class Mayorista {
     private static boolean yaPedi = false;
 
     public Mayorista(double p, double q, Generador generador) {
-        this.inventario = 100; //5000
+        this.inventario = 50; //5000
         this.p = p;
         this.q = q;
+        this.faltantes = 0;
         this.misOrdenes = new ArrayList<>();
         this.ordenes = new ArrayList<>();
         
@@ -89,9 +91,11 @@ public class Mayorista {
                 //System.out.println("DEBUG: Orden:"+json.toJson(ordenes.get(ordenes.size()-1)));
                 if(inventario <= cantidad){
                     revisarInventario(cantidad);
-                    ordenes.add(new Orden(id, cantidad, generarDiasEspera()+misOrdenes.get(misOrdenes.size()-1).getDiasEspera()));
+                    ordenes.add(new Orden(id, cantidad, generarDiasEspera()+1+misOrdenes.get(misOrdenes.size()-1).getDiasEspera()));
+                    //ordenes.add(new Orden(id, cantidad, 1+misOrdenes.get(misOrdenes.size()-1).getDiasEspera()));
                 }else{
                     ordenes.add(new Orden(id, cantidad, generarDiasEspera()));
+                    //ordenes.add(new Orden(id, cantidad, 0));
                 }
                 CMayorista.mostrarOrdenes();
                 return json.toJson(ordenes.get(ordenes.size()-1));
@@ -104,6 +108,10 @@ public class Mayorista {
                         orden.setAceptado(Boolean.TRUE);
                         CMayorista.mostrarOrdenes();
                         inventario -= orden.getCantidad();
+                        if(inventario < 0){
+                            faltantes += Math.abs(inventario);
+                            inventario = 0;
+                        }
                         CMayorista.mostrarStock();
                     }
                 }
@@ -187,13 +195,15 @@ public class Mayorista {
             if(!this.misOrdenes.get(this.misOrdenes.size()-1).isEntregado()){
                 if(this.misOrdenes.get(this.misOrdenes.size()-1).getDiasEspera() == -1){
                     this.inventario += this.misOrdenes.get(this.misOrdenes.size()-1).getCantidad();
+                    this.inventario -= faltantes;
+                    faltantes = 0;
                     this.misOrdenes.get(this.misOrdenes.size()-1).setEntregado(true);
                     yaPedi = false;
-                    System.out.println("Recibió pedido");
+                    //System.out.println("Recibió pedido");
                 }
             }
             CMayorista.mostrarMiPedido();
-            System.out.println("Dias espera: "+this.misOrdenes.get(this.misOrdenes.size()-1).getDiasEspera());
+            //System.out.println("Dias espera: "+this.misOrdenes.get(this.misOrdenes.size()-1).getDiasEspera());
         }
         
         disminuirDia(this.misOrdenes);
@@ -212,6 +222,10 @@ public class Mayorista {
 
     public double getInventario() {
         return inventario;
+    }
+
+    public int getFaltantes() {
+        return faltantes;
     }
 
     public List<Orden> getOrdenes() {
