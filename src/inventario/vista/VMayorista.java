@@ -42,7 +42,7 @@ public class VMayorista extends javax.swing.JFrame {
         tOrdenes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {},
             new String [] {
-                "Id Minorista", "Cantidad", "Dias de espera", "Aceptado", "Atendido"
+                "Id Minorista", "Cantidad", "Dias de espera", "Aceptado", "Entregado"
             }));
         DefaultTableModel temp = (DefaultTableModel) tOrdenes.getModel();
         for (int i = 0; i < tam; i++) {
@@ -150,7 +150,7 @@ public class VMayorista extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Id Minorista", "Cantidad", "Dias de espera", "Aceptado", "Atendido"
+                "Id Minorista", "Cantidad", "Dias de espera", "Aceptado", "Entregado"
             }
         ) {
             Class[] types = new Class [] {
