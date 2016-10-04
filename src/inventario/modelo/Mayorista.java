@@ -58,8 +58,8 @@ public class Mayorista {
         Remote stub;
         stub = UnicastRemoteObject.exportObject(new IMayorista() {
             @Override
-            public int conectarse(String id) throws RemoteException {
-                if(minoristas.add(id)){
+            public int conectarse(String tipoMinorista) throws RemoteException {
+                if(minoristas.add(tipoMinorista)){
                     System.out.println("DEBUG: Ha llegado cliente");
                     CMayorista.mostrarMinoristas();
                     return minoristas.size()-1;
@@ -69,10 +69,10 @@ public class Mayorista {
             }
             
             @Override
-            public boolean desconectarse(String minorista) throws RemoteException {
+            public boolean desconectarse(String id) throws RemoteException {
                 System.out.println("DEBUG: Ha salido cliente");
                 CMayorista.mostrarMinoristas();
-                return minoristas.remove(minorista);
+                return minoristas.remove(id);
             }
             
             @Override
