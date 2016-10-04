@@ -25,13 +25,23 @@ public class CMayorista {
     private static Mayorista mayorista;
     private static VMayorista ventana; 
     private static Generador generador;
-    
+    /**
+     * Método que recibe el generador a utilizar y se inicia la ventana del mayorista.
+     * 
+     * @param generador Generador de numeros aleatorios que se va a utilizar.
+     */
     public static void iniciar(Generador generador)  {
         CMayorista.generador = generador;
         ventana = new VMayorista();
         ventana.setVisible(true);
     }
-    
+    /**
+     * Método que instancia un mayorista e inicia el servidor.
+     * 
+     * @param p Punto reorden.
+     * @param q Cantidad a ordenar.
+     * @param puerto Puerto donde se ejecutará el servidor.
+     */
     public static void iniciarServidor(int p, int q,  int puerto) {
         mayorista = new Mayorista(p, q, generador);
         try {
@@ -44,25 +54,37 @@ public class CMayorista {
         mostrarDia();
         mostrarStock();
     }
-    
-    public static void actualizarClientes(List clientes){
-        ventana.actualizarCliente(clientes);
+    /**
+     * Método para actualizar en la ventana el número de minoristas conectados.
+     * 
+     * @param minoristas Lista de minoristas.
+     */
+    public static void actualizarClientes(List minoristas){
+        ventana.actualizarCliente(minoristas);
     }
-    
+    /**
+     * Método para pasar de día.
+     */
     public static void siguienteDia(){
         mayorista.pasarDia();
         mostrarDia();
         mostrarStock();
     }
-    
+    /**
+     * Método para actualizar en la ventana el día actual.
+     */
     public static void mostrarDia(){
         ventana.mostrarDia(mayorista.getDiaActual());
     }
-    
+    /**
+     * Método para actualizar en la ventana el inventario y faltantes.
+     */
     public static void mostrarStock(){
-        ventana.mostrarStock((int) mayorista.getInventario(), mayorista.getFaltantes());
+        ventana.mostrarStock(mayorista.getInventario(), mayorista.getFaltantes());
     }
-    
+    /**
+     * Método para mostrar las ordenes que se han solicitado.
+     */
     public static void mostrarOrdenes(){
         Object[][] datos = new Object[mayorista.getOrdenes().size()][6];
         int i = 0;
@@ -76,7 +98,9 @@ public class CMayorista {
         }
         ventana.mostrarOrdenes(datos, mayorista.getOrdenes().size());
     }
-    
+    /**
+     * Método para mostrar pedido del mayorista en la ventana.
+     */
     public static void mostrarMiPedido(){
         Orden referencia = mayorista.getMisOrdenes().get(mayorista.getMisOrdenes().size()-1);
         if(referencia.isEntregado())
@@ -84,22 +108,23 @@ public class CMayorista {
         else 
             ventana.mostrarMiPedido(referencia.getCantidad(), referencia.getDiasEspera());
     }
-    
+    /**
+     * Método para mostrar los minoristas en la ventana.
+     */
     public static void mostrarMinoristas(){
         ventana.mostrarMinoristas(mayorista.getMinoristas());
         actualizarClientes(mayorista.getMinoristas());
     }
-    
+    /**
+     * Método para programar paso de día cada cierto tiempo.
+     */
     public static void diaAuto(){
         // Clase en la que está el código a ejecutar 
-        TimerTask timerTask = new TimerTask() 
-        { 
-            public void run()  
-            { 
+        TimerTask timerTask = new TimerTask(){ 
+            public void run(){ 
              siguienteDia();
             } 
-        }; 
-     
+        };
       // Aquí se pone en marcha el timer cada segundo. 
      Timer timer = new Timer(); 
      // Dentro de 0 milisegundos avísame cada 10000 milisegundos 

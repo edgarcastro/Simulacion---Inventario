@@ -254,7 +254,7 @@ public class Mayorista {
         return diaActual;
     }
 
-    public double getInventario() {
+    public int getInventario() {
         return inventario;
     }
 
