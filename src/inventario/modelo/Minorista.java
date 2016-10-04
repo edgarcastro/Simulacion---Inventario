@@ -37,7 +37,7 @@ public class Minorista {
         this.puertoServidor = puertoServidor;
         Registry registro = LocateRegistry.getRegistry(this.ipServidor, this.puertoServidor);
         this.mayorista = (IMayorista) registro.lookup("Mayorista");
-        this.id = this.mayorista.conectarse("Cliente");
+        this.id = this.mayorista.conectarse("H");
         if (this.id != -1)
             System.out.println("DEBUG: Conectado"); 
     }

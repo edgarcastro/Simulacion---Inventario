@@ -69,7 +69,7 @@ public class CMayorista {
             datos[i][1] = orden.getCantidad();
             datos[i][2] = orden.getDiasEspera();
             datos[i][3] = orden.isAceptado();
-            datos[i][4] = orden.isAtendido();
+            datos[i][4] = orden.isEntregado();
             i++;
         }
         ventana.mostrarOrdenes(datos, mayorista.getOrdenes().size());
@@ -77,7 +77,7 @@ public class CMayorista {
     
     public static void mostrarMiPedido(){
         Orden referencia = mayorista.getMisOrdenes().get(mayorista.getMisOrdenes().size()-1);
-        if(referencia.isAtendido())
+        if(referencia.isEntregado())
             ventana.mostrarMiPedido(0, 0);
         else 
             ventana.mostrarMiPedido(referencia.getCantidad(), referencia.getDiasEspera());

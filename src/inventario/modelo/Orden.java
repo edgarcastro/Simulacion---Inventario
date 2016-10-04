@@ -14,14 +14,14 @@ public class Orden{
     private int idMinorista;
     private int cantidad;
     private int diasEspera;
-    private boolean atendido;
+    private boolean entregado;
     private boolean aceptado;
 
     public Orden(int id, int cantidad, int diasEspera) {
         this.idMinorista = id;
         this.cantidad = cantidad;
         this.diasEspera = diasEspera;
-        this.atendido = Boolean.FALSE;
+        this.entregado = Boolean.FALSE;
         this.aceptado = Boolean.FALSE;
     }
     
@@ -30,7 +30,7 @@ public class Orden{
         this.cantidad = orden.getCantidad();
         this.diasEspera = orden.getDiasEspera();
         this.aceptado = orden.isAceptado();
-        this.atendido = orden.isAtendido();
+        this.entregado = orden.isEntregado();
     }
     
     public void pasarDia() {
@@ -61,12 +61,12 @@ public class Orden{
         this.diasEspera = diasEspera;
     }
 
-    public boolean isAtendido() {
-        return atendido;
+    public boolean isEntregado() {
+        return entregado;
     }
 
-    public void setAtendido(boolean atendido) {
-        this.atendido = atendido;
+    public void setEntregado(boolean entregado) {
+        this.entregado = entregado;
     }
 
     public boolean isAceptado() {

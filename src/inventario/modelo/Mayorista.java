@@ -40,7 +40,7 @@ public class Mayorista {
     private static boolean yaPedi = false;
 
     public Mayorista(double p, double q, Generador generador) {
-        this.inventario = 500; //5000
+        this.inventario = 100; //5000
         this.p = p;
         this.q = q;
         this.misOrdenes = new ArrayList<>();
@@ -82,12 +82,12 @@ public class Mayorista {
             public String hacerPedido(int cantidad, int id) throws RemoteException {
                 Gson json = new Gson();
                 for (Orden orden : ordenes) {
-                    if(orden.getIdMinorista()==id && !orden.isAtendido() || orden.getDiasEspera()==0){
+                    if(orden.getIdMinorista()==id && !orden.isEntregado() || orden.getDiasEspera()==0){
                         return "Ya tienes un pedido pendiente";
                     }
                 }
                 //System.out.println("DEBUG: Orden:"+json.toJson(ordenes.get(ordenes.size()-1)));
-                if(inventario < cantidad){
+                if(inventario <= cantidad){
                     revisarInventario(cantidad);
                     ordenes.add(new Orden(id, cantidad, generarDiasEspera()+misOrdenes.get(misOrdenes.size()-1).getDiasEspera()));
                 }else{
@@ -103,7 +103,8 @@ public class Mayorista {
                     if(orden.getIdMinorista()==id){
                         orden.setAceptado(Boolean.TRUE);
                         CMayorista.mostrarOrdenes();
-                        //inventario -= orden.getCantidad();
+                        inventario -= orden.getCantidad();
+                        CMayorista.mostrarStock();
                     }
                 }
                 
@@ -114,7 +115,7 @@ public class Mayorista {
             public String verificarPedido(int id) throws RemoteException {
                 Gson json = new Gson();
                 for (Orden orden : ordenes) {
-                    if(orden.getIdMinorista()==id && !orden.isAtendido()){
+                    if(orden.getIdMinorista()==id && !orden.isEntregado()){
                         return json.toJson(orden);
                     }
                 }
@@ -162,13 +163,14 @@ public class Mayorista {
         if(!this.ordenes.isEmpty()){
             for (Orden orden : this.ordenes) {
                 if(orden.getDiasEspera() == 0 && orden.isAceptado()) {
-                    if(orden.getCantidad() <= this.inventario) {
-                        this.inventario -= orden.getCantidad();
+                    orden.setEntregado(true);
+                    /*if(orden.getCantidad() <= this.inventario) {
+                        //this.inventario -= orden.getCantidad();
                         orden.setAtendido(true);
                     } else {
                         revisarInventario(orden.getCantidad());
                         orden.setDiasEspera(generarDiasEspera()+1+misOrdenes.get(misOrdenes.size()-1).getDiasEspera());
-                    }
+                    }*/
                 }
             }
         }
@@ -182,10 +184,10 @@ public class Mayorista {
             yaPedi = true;
         }
         if(!this.misOrdenes.isEmpty()) {
-            if(!this.misOrdenes.get(this.misOrdenes.size()-1).isAtendido()){
+            if(!this.misOrdenes.get(this.misOrdenes.size()-1).isEntregado()){
                 if(this.misOrdenes.get(this.misOrdenes.size()-1).getDiasEspera() == -1){
                     this.inventario += this.misOrdenes.get(this.misOrdenes.size()-1).getCantidad();
-                    this.misOrdenes.get(this.misOrdenes.size()-1).setAtendido(true);
+                    this.misOrdenes.get(this.misOrdenes.size()-1).setEntregado(true);
                     yaPedi = false;
                     System.out.println("Recibió pedido");
                 }
@@ -200,9 +202,6 @@ public class Mayorista {
     public void pasarDia(){
         revisarInventario((int)this.p);  //Mis Ordenes
         atenderOrdenes();   //Ordenes de Minoristas
-        if(diaActual == 3){
-            inventario=70;
-        }
         this.diaActual++;
     }
 
