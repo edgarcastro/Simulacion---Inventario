@@ -321,7 +321,7 @@ public class VMayorista extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bIniciarActionPerformed
-        CMayorista.iniciarServidor(Double.parseDouble(this.tP.getText()), Double.parseDouble(this.tQ.getText()), Integer.parseInt(this.tPuerto.getText()));
+        CMayorista.iniciarServidor(Integer.parseInt(this.tP.getText()), Integer.parseInt(this.tQ.getText()), Integer.parseInt(this.tPuerto.getText()));
         this.tP.setEditable(Boolean.FALSE);
         this.tP.setEnabled(Boolean.FALSE);
         this.tQ.setEditable(Boolean.FALSE);

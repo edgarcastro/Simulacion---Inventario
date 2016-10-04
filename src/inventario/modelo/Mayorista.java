@@ -26,34 +26,65 @@ import numerospseudoaleatorios.modelo.Generador;
  * @author edgarcastro
  */
 public class Mayorista {
-    private double inventario;
-    private double p; //Punto de reorden
-    private double q; //Cantidad a ordenar
+    /**
+     * Cantidad en inventario que posee el mayorista.
+     */
+    private int inventario;
+    /**
+     * Punto de reorden del mayorista.
+     */
+    private int p;
+    /**
+     * Cantidad a ordenar por el mayorista.
+     */
+    private int q;
+    /**
+     * Cantidad en faltantes.
+     */
     private int faltantes;
+    /**
+     * Lista de ordenes solicitadas por el mayorista.
+     */
     private List<Orden> misOrdenes;
+    /**
+     * Lista de ordenes solicitadas por los minoristas al mayorista.
+     */
     private List<Orden> ordenes;
-    
+    /**
+     * Día actual del servidor.
+     */
     private int diaActual;
-    
+    /**
+     * Lista de minoristas que están conectados.
+     */
     private List<String> minoristas;
+    /**
+     * Generador de numeros aleatorios.
+     */
     private Generador generador;
-    
+    /**
+     * Estado que señala si el mayorista tiene un pedido pendiente por llegar.
+     */
     private static boolean yaPedi = false;
 
-    public Mayorista(double p, double q, Generador generador) {
+    public Mayorista(int p, int q, Generador generador) {
         this.inventario = 50; //5000
         this.p = p;
         this.q = q;
         this.faltantes = 0;
         this.misOrdenes = new ArrayList<>();
         this.ordenes = new ArrayList<>();
-        
         this.diaActual = 1;
-        
         this.minoristas = new ArrayList();
         this.generador = generador;
     }
-    
+    /**
+     * Método que inicia el servidor e implementa los métodos de la interfaz.
+     * 
+     * @param puerto puerto en el cual el servidor se va a ejecutar.
+     * @throws RemoteException
+     * @throws AlreadyBoundException 
+     */
     public void iniciar(int puerto) throws RemoteException, AlreadyBoundException{
         Remote stub;
         stub = UnicastRemoteObject.exportObject(new IMayorista() {
@@ -88,14 +119,13 @@ public class Mayorista {
                         return "Ya tienes un pedido pendiente";
                     }
                 }
-                //System.out.println("DEBUG: Orden:"+json.toJson(ordenes.get(ordenes.size()-1)));
                 if(inventario <= cantidad){
                     revisarInventario(cantidad);
-                    ordenes.add(new Orden(id, cantidad, generarDiasEspera()+1+misOrdenes.get(misOrdenes.size()-1).getDiasEspera()));
-                    //ordenes.add(new Orden(id, cantidad, 1+misOrdenes.get(misOrdenes.size()-1).getDiasEspera()));
+                    //ordenes.add(new Orden(id, cantidad, generarDiasEspera()+1+misOrdenes.get(misOrdenes.size()-1).getDiasEspera()));
+                    ordenes.add(new Orden(id, cantidad, 1+misOrdenes.get(misOrdenes.size()-1).getDiasEspera()));
                 }else{
-                    ordenes.add(new Orden(id, cantidad, generarDiasEspera()));
-                    //ordenes.add(new Orden(id, cantidad, 0));
+                    //ordenes.add(new Orden(id, cantidad, generarDiasEspera()));
+                    ordenes.add(new Orden(id, cantidad, 0));
                 }
                 CMayorista.mostrarOrdenes();
                 return json.toJson(ordenes.get(ordenes.size()-1));
@@ -115,8 +145,6 @@ public class Mayorista {
                         CMayorista.mostrarStock();
                     }
                 }
-                
-                //CMayorista.mostrarStock();
             }
 
             @Override
@@ -143,7 +171,11 @@ public class Mayorista {
             Logger.getLogger(Mayorista.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+    /**
+     * Método para generar aleatoriamente los días de espera.
+     * 
+     * @return Días que tiene que esperar.
+     */
     public int generarDiasEspera() {
         int diasEspera;
         double numero = this.generador.siguienteVar();
@@ -160,35 +192,39 @@ public class Mayorista {
         }
         return diasEspera;
     }
-    
+    /**
+     * Método que disminuye un dia a una lista de ordenes
+     * 
+     * @param ordenes Lista de ordenes
+     */
     public void disminuirDia(List<Orden> ordenes){
         ordenes.stream().forEach((orden) -> {
             orden.setDiasEspera(orden.getDiasEspera()-1);
         });
     }
     
+    /**
+     * Método que revisa que ordenes ya fueron entregadas.
+     */
     public void atenderOrdenes(){
         if(!this.ordenes.isEmpty()){
             for (Orden orden : this.ordenes) {
                 if(orden.getDiasEspera() == 0 && orden.isAceptado()) {
                     orden.setEntregado(true);
-                    /*if(orden.getCantidad() <= this.inventario) {
-                        //this.inventario -= orden.getCantidad();
-                        orden.setAtendido(true);
-                    } else {
-                        revisarInventario(orden.getCantidad());
-                        orden.setDiasEspera(generarDiasEspera()+1+misOrdenes.get(misOrdenes.size()-1).getDiasEspera());
-                    }*/
                 }
             }
         }
         disminuirDia(this.ordenes);
         CMayorista.mostrarOrdenes();
     }
-    
+    /**
+     * Método que revisa el inventario para realizar un pedido o no.
+     * 
+     * @param valor Cantidad que se le solicita al mayorista.
+     */
     public void revisarInventario(int valor){
         if(this.inventario <= valor && !yaPedi){
-            this.misOrdenes.add(new Orden(-1, (int) ((int)this.q-this.inventario), generarDiasEspera()+1));
+            this.misOrdenes.add(new Orden(-1, (this.q-this.inventario), generarDiasEspera()+1));
             yaPedi = true;
         }
         if(!this.misOrdenes.isEmpty()) {
@@ -199,24 +235,22 @@ public class Mayorista {
                     faltantes = 0;
                     this.misOrdenes.get(this.misOrdenes.size()-1).setEntregado(true);
                     yaPedi = false;
-                    //System.out.println("Recibió pedido");
                 }
             }
             CMayorista.mostrarMiPedido();
-            //System.out.println("Dias espera: "+this.misOrdenes.get(this.misOrdenes.size()-1).getDiasEspera());
         }
-        
         disminuirDia(this.misOrdenes);
     }
-    
+    /**
+     * Método para ir transcurriendo los dias de uno en uno.
+     */
     public void pasarDia(){
-        revisarInventario((int)this.p);  //Mis Ordenes
-        atenderOrdenes();   //Ordenes de Minoristas
+        revisarInventario(this.p);  
+        atenderOrdenes();   
         this.diaActual++;
     }
 
     public int getDiaActual() {
-        
         return diaActual;
     }
 

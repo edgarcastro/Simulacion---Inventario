@@ -32,7 +32,7 @@ public class CMayorista {
         ventana.setVisible(true);
     }
     
-    public static void iniciarServidor(double p, double q,  int puerto) {
+    public static void iniciarServidor(int p, int q,  int puerto) {
         mayorista = new Mayorista(p, q, generador);
         try {
             mayorista.iniciar(puerto);
