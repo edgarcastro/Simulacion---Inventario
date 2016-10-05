@@ -356,8 +356,8 @@ public class VMayorista extends javax.swing.JFrame {
     }//GEN-LAST:event_BSgteDiaActionPerformed
 
     private void bAutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bAutoActionPerformed
-        this.tP.setText(""+100);
-        this.tQ.setText(""+500);
+        this.tP.setText(""+2000);
+        this.tQ.setText(""+5000);
         this.tPuerto.setText(""+5555);
         bIniciarActionPerformed(evt);
     }//GEN-LAST:event_bAutoActionPerformed

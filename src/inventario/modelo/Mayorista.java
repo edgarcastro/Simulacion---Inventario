@@ -68,7 +68,7 @@ public class Mayorista {
     private static boolean yaPedi = false;
 
     public Mayorista(int p, int q, Generador generador) {
-        this.inventario = 50; //5000
+        this.inventario = 5000; //5000
         this.p = p;
         this.q = q;
         this.faltantes = 0;
