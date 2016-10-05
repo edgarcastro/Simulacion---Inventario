@@ -121,11 +121,11 @@ public class Mayorista {
                 }
                 if(inventario <= cantidad){
                     revisarInventario(cantidad);
-                    //ordenes.add(new Orden(id, cantidad, generarDiasEspera()+1+misOrdenes.get(misOrdenes.size()-1).getDiasEspera()));
-                    ordenes.add(new Orden(id, cantidad, 1+misOrdenes.get(misOrdenes.size()-1).getDiasEspera()));
+                    ordenes.add(new Orden(id, cantidad, generarDiasEspera()+1+misOrdenes.get(misOrdenes.size()-1).getDiasEspera()));
+                    //ordenes.add(new Orden(id, cantidad, 1+misOrdenes.get(misOrdenes.size()-1).getDiasEspera()));
                 }else{
-                    //ordenes.add(new Orden(id, cantidad, generarDiasEspera()));
-                    ordenes.add(new Orden(id, cantidad, 0));
+                    ordenes.add(new Orden(id, cantidad, generarDiasEspera()));
+                    //ordenes.add(new Orden(id, cantidad, 0));
                 }
                 CMayorista.mostrarOrdenes();
                 return json.toJson(ordenes.get(ordenes.size()-1));
