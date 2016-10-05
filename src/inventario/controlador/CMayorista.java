@@ -121,6 +121,7 @@ public class CMayorista {
     public static void diaAuto(){
         // Clase en la que está el código a ejecutar 
         TimerTask timerTask = new TimerTask(){ 
+            @Override
             public void run(){ 
              siguienteDia();
             } 

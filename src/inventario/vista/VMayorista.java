@@ -20,6 +20,7 @@ public class VMayorista extends javax.swing.JFrame {
      */
     public VMayorista() {
         initComponents();
+        setLocationRelativeTo(null);
         this.lInventario.setText("");
         this.lPedido.setText("");
         this.lDiaActual.setText("");
@@ -116,6 +117,7 @@ public class VMayorista extends javax.swing.JFrame {
         setTitle("MAYORISTA");
         setResizable(false);
 
+        lPuerto.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         lPuerto.setText("Puerto:");
 
         bIniciar.setText("Iniciar");
@@ -125,14 +127,21 @@ public class VMayorista extends javax.swing.JFrame {
             }
         });
 
+        lClientes.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         lClientes.setText("Número de  Minoristas:");
 
-        lNumClientes.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        lNumClientes.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         lNumClientes.setText("###");
 
+        lP.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         lP.setText("p:");
 
+        tP.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+
+        lQ.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         lQ.setText("q:");
+
+        tQ.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
 
         BSgteDia.setText("Siguiente Dia");
         BSgteDia.setEnabled(false);
@@ -142,12 +151,16 @@ public class VMayorista extends javax.swing.JFrame {
             }
         });
 
+        lDia.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         lDia.setText("Dia actual: ");
 
+        lDiaActual.setFont(new java.awt.Font("Calibri", 0, 18)); // NOI18N
         lDiaActual.setText("###");
 
-        lStock.setText("Stock:");
+        lStock.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
+        lStock.setText("Inventario:");
 
+        lInventario.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         lInventario.setText("####");
 
         tOrdenes.setModel(new javax.swing.table.DefaultTableModel(
@@ -187,6 +200,7 @@ public class VMayorista extends javax.swing.JFrame {
         tMinoristas.setEnabled(false);
         sMinoristas.setViewportView(tMinoristas);
 
+        cTengoPedido.setFont(new java.awt.Font("Calibri", 0, 12)); // NOI18N
         cTengoPedido.setText("Tengo un pedido");
         cTengoPedido.setEnabled(false);
         cTengoPedido.addChangeListener(new javax.swing.event.ChangeListener() {
@@ -195,6 +209,7 @@ public class VMayorista extends javax.swing.JFrame {
             }
         });
 
+        lPedido.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         lPedido.setText("<html>\nCantidad: \n<br>\nDias de espera: \n</html>");
 
         bDiaAuto.setText("Auto");
@@ -205,8 +220,10 @@ public class VMayorista extends javax.swing.JFrame {
             }
         });
 
+        lFaltantes.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         lFaltantes.setText("Faltantes:");
 
+        lFalta.setFont(new java.awt.Font("Calibri", 0, 14)); // NOI18N
         lFalta.setText("###");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -216,105 +233,107 @@ public class VMayorista extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(lDia)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(lDiaActual))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(BSgteDia)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(bDiaAuto))))
-                    .addGroup(layout.createSequentialGroup()
                         .addGap(28, 28, 28)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cTengoPedido)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(lStock)
-                                    .addComponent(lP))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(lFaltantes)
+                                    .addComponent(lStock))
+                                .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lInventario, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(tP, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(lFalta)))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(lFaltantes)
+                                .addComponent(lQ)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tQ, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(bIniciar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(bAuto))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(lP)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tP, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(18, 18, 18)
-                                .addComponent(lFalta))))
+                                .addComponent(lPuerto)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(tPuerto, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(39, 39, 39)
-                        .addComponent(lPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(36, 36, 36)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cTengoPedido)
+                                    .addComponent(lPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(lDia)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(lDiaActual))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(19, 19, 19)
+                                .addComponent(BSgteDia)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(bDiaAuto)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 64, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(lClientes)
-                                .addGap(31, 31, 31)
-                                .addComponent(lNumClientes))
-                            .addComponent(sMinoristas, javax.swing.GroupLayout.PREFERRED_SIZE, 216, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(37, 37, 37)
-                        .addComponent(sOrdenes, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(3, 3, 3)
-                        .addComponent(lQ)
-                        .addGap(18, 18, 18)
-                        .addComponent(tQ, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lPuerto)
+                        .addComponent(sMinoristas, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(tPuerto, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(sOrdenes, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lClientes)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(bIniciar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(bAuto)
-                        .addGap(14, 14, 14))))
+                        .addComponent(lNumClientes)))
+                .addGap(24, 24, 24))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(sOrdenes, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                    .addComponent(sMinoristas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lClientes)
+                    .addComponent(lNumClientes))
+                .addGap(40, 40, 40))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(14, 14, 14)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lPuerto)
                     .addComponent(tPuerto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(bIniciar)
                     .addComponent(lP)
-                    .addComponent(tP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(tP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lQ)
                     .addComponent(tQ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(bIniciar)
                     .addComponent(bAuto))
-                .addGap(29, 29, 29)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lStock)
-                            .addComponent(lInventario))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lFaltantes)
-                            .addComponent(lFalta))
-                        .addGap(12, 12, 12)
-                        .addComponent(cTengoPedido)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(sOrdenes, javax.swing.GroupLayout.PREFERRED_SIZE, 285, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(sMinoristas, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lClientes)
-                            .addComponent(lNumClientes))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addGap(33, 33, 33)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lStock)
+                    .addComponent(lInventario))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lFaltantes)
+                    .addComponent(lFalta))
+                .addGap(18, 18, 18)
+                .addComponent(cTengoPedido)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lPedido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(52, 52, 52)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lDia)
                     .addComponent(lDiaActual))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(10, 10, 10)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(BSgteDia)
                     .addComponent(bDiaAuto))
-                .addGap(76, 76, 76))
+                .addGap(56, 56, 56))
         );
 
         pack();
