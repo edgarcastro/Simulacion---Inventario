@@ -160,7 +160,7 @@ public class Mayorista {
 
             @Override
             public int numeroMinoristas() throws RemoteException {
-                return getOrdenes().size();
+                return getMinoristas().size();
             }
         },0);
         Registry registry = LocateRegistry.createRegistry(puerto);
